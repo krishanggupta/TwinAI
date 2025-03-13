@@ -10,11 +10,11 @@ class ai2ai:
         self.user=user
         self.user_description=user_description
             
-    def chat_with_ai(self,user_command_to_ai, ai_name='you are a hotel booking assistant',conversation_history=[],my_model='gpt-4o-mini',skip_setup=''):
+    def chat_with_ai(self,api_key,user_command_to_ai, ai_name='you are a hotel booking assistant',conversation_history=[],my_model='gpt-4o-mini',skip_setup=''):
         client = AzureOpenAI(
             api_version="2024-10-21",
             azure_endpoint='https://imagegenerator.openai.azure.com/',
-            api_key="3de3eb8252114e1d8ee8aecf893e8187"
+            api_key=api_key
         )
 
         if user_command_to_ai.lower() in ['thank','thanks','done','bye','stop','thank you']:
@@ -48,7 +48,7 @@ class ai2ai:
 
         return bot_reply,conversation_history
 
-    def ai_to_ai_convo(self,myobj):  
+    def ai_to_ai_convo(self,api_key,myobj):  
 
         user1=self.user
         user2=myobj.user
@@ -77,12 +77,12 @@ class ai2ai:
 
             print(f'Iteration {i}')
             
-            response_from_ai2, conversation_with_ai2 = self.chat_with_ai(user_command_to_ai=aim2,ai_name=ai_type2,conversation_history=conversation_with_ai2,skip_setup=decision1)
+            response_from_ai2, conversation_with_ai2 = self.chat_with_ai(api_key,user_command_to_ai=aim2,ai_name=ai_type2,conversation_history=conversation_with_ai2,skip_setup=decision1)
             
             print(f"{user2_description} : {response_from_ai2}")
 
             conversation_with_ai1.append({"role": "user", "content": response_from_ai2}) 
-            response_from_ai1, conversation_with_ai1 = self.chat_with_ai(user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=True)
+            response_from_ai1, conversation_with_ai1 = self.chat_with_ai(api_key,user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=True)
             print(f"{user1_description} : {response_from_ai1}")
 
             conversation_with_ai2.append({"role": "user", "content": response_from_ai1})
@@ -104,5 +104,5 @@ if __name__=='__main__':
     ai2ai.topic=topic
     obj1=ai2ai(user1,user1_description)
     obj2=ai2ai(user2,user2_description)
-
-    obj1.ai_to_ai_convo(obj2)
+    api_key=input()
+    obj1.ai_to_ai_convo(api_key,obj2)
