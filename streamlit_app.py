@@ -27,6 +27,7 @@ topic_list+=['Custom']
 try:
     get_max_rounds=st.sidebar.number_input("Select the maximum iterations",min_value=0,key='itr')
     get_topic=st.sidebar.selectbox("Select the topic from a pre-defined list", topic_list,0)
+    api_key=st.sidebar.text_input('enter api key',key='api_itr')
        
     if get_topic=='Custom':
             topic=st.sidebar.text_input(label="Enter your topic of discussion:",key='top2')
@@ -51,7 +52,7 @@ try:
         button1=st.button('Start Conversation with User2')
         topic = st.session_state.get("topic", 'genAI')
         max_rounds = st.session_state.get("maxi",10)
-        obj1=ai2ai(user1,user1_description)
+        obj1=ai2ai(api_key,user1,user1_description)
         ai2ai.max_rounds=max_rounds
         ai2ai.topic=topic
         obj_1=MyAIAgent()
@@ -64,9 +65,9 @@ try:
             st.text('Start')
             for i in range(obj1.max_rounds):
                 if i==0:
-                    response_from_ai1, conversation_with_ai1 = obj1.chat_with_ai(user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=False)
+                    response_from_ai1, conversation_with_ai1 = obj1.chat_with_ai(api_key,user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=False)
                 else:
-                    response_from_ai1, conversation_with_ai1 = obj1.chat_with_ai(user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=True)
+                    response_from_ai1, conversation_with_ai1 = obj1.chat_with_ai(api_key,user_command_to_ai=aim1,ai_name=ai_type1,conversation_history=conversation_with_ai1,skip_setup=True)
 
                 print(f"{user2_description} : {response_from_ai1}")
                 st.text(f"{user1_description} : {response_from_ai1}")
@@ -95,7 +96,7 @@ try:
         max_rounds = st.session_state.get("maxi",10)
         ai2ai.max_rounds=max_rounds
         ai2ai.topic=topic
-        obj2=ai2ai(user2,user2_description)
+        obj2=ai2ai(api_key,user2,user2_description)
         obj_2=MyAIAgent()
 
 
@@ -114,7 +115,7 @@ try:
                         response_from_ai1 = future.result()  # This will hold the return value
 
                     conversation_with_ai2.append({"role": "user", "content": response_from_ai1}) 
-                    response_from_ai2, conversation_with_ai2 = obj1.chat_with_ai(user_command_to_ai=aim2,ai_name=ai_type2,conversation_history=conversation_with_ai2,skip_setup=False)
+                    response_from_ai2, conversation_with_ai2 = obj1.chat_with_ai(api_key,user_command_to_ai=aim2,ai_name=ai_type2,conversation_history=conversation_with_ai2,skip_setup=False)
                     print(f"{user2_description} : {response_from_ai2}")
                     st.text(f"{user2_description} : {response_from_ai2}")
                     
