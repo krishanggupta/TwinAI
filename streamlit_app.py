@@ -52,7 +52,7 @@ try:
         button1=st.button('Start Conversation with User2')
         topic = st.session_state.get("topic", 'genAI')
         max_rounds = st.session_state.get("maxi",10)
-        obj1=ai2ai(api_key,user1,user1_description)
+        obj1=ai2ai(user1,user1_description)
         ai2ai.max_rounds=max_rounds
         ai2ai.topic=topic
         obj_1=MyAIAgent()
@@ -96,7 +96,7 @@ try:
         max_rounds = st.session_state.get("maxi",10)
         ai2ai.max_rounds=max_rounds
         ai2ai.topic=topic
-        obj2=ai2ai(api_key,user2,user2_description)
+        obj2=ai2ai(user2,user2_description)
         obj_2=MyAIAgent()
 
 
